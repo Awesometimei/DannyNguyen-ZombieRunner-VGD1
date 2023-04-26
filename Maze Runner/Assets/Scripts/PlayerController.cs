@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
 
     private bool CanShoot = true;
-    private bool IsOnGround = true;
 
     // Start is called before the first frame update
     void Start()
@@ -33,25 +32,14 @@ public class PlayerController : MonoBehaviour
             CanShoot = false;                                                                         //Prevents player from spam firing projectiles
             StartCoroutine(ShootingCooldown());                                                       //Starts cooldown until player can shoot again
         }
-
-        if (Input.GetKeyDown(KeyCode.Space) && IsOnGround) {
-            transform.position = new Vector3(transform.position.x, transform.position.y + jumpForce, transform.position.z);
-            IsOnGround = false;
-        }
         
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Ground"))
-        {
-        IsOnGround = true; 
-        }
-    }
 
-    IEnumerator ShootingCooldown()
+    IEnumerator ShootingCooldown()  
     {
-        yield return new WaitForSeconds(1);
-        CanShoot = true;
+        yield return new WaitForSeconds(0.1f);                                                        //Sets a timer for the cooldown until player can shoot again
+        CanShoot = true;                                                                              //Allows player to shoot again
     }
 }
+

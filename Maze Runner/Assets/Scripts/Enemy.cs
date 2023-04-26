@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour
     public float speed;
     private Rigidbody enemyRb;
     private GameObject player;
-    private float yLimit = -10;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +24,16 @@ public class Enemy : MonoBehaviour
 
         //Adds force on the player depending on player's and its own location times the speed
         enemyRb.AddForce(lookDirection * speed);
-
-        //If enemy goes under y limit, destroy
-        if (transform.position.y < yLimit) { Destroy(gameObject); }
     }
+   
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Projectile")){
+            Destroy(gameObject);
+        } 
+    }
+
+    
+
 }
 
