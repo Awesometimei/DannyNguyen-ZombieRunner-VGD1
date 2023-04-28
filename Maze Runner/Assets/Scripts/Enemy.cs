@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public float speed;
     private Rigidbody enemyRb;
-    private GameObject player;
+    private GameObject target;
 
     // Start is called before the first frame update
     void Start()
@@ -14,13 +14,13 @@ public class Enemy : MonoBehaviour
         //Defines what the enemyRb is for later reference
         enemyRb = GetComponent<Rigidbody>();
         //References the player for later use
-        player = GameObject.Find("Player");
+        target = GameObject.Find("Base");
     }
 
     // Update is called once per frame
     void Update()
     {   //Defines what lookDirection is for later reference
-        Vector3 lookDirection = (player.transform.position - transform.position).normalized;
+        Vector3 lookDirection = (target.transform.position - transform.position).normalized;
 
         //Adds force on the player depending on player's and its own location times the speed
         enemyRb.AddForce(lookDirection * speed);

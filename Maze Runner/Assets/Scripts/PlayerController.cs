@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
     private float speed = 8.0f;
     private float horizontalInput;
     private float forwardInput;
-    public float jumpForce;
 
     public GameObject projectilePrefab;
 
@@ -34,7 +33,6 @@ public class PlayerController : MonoBehaviour
         }
         
     }
-
 
     IEnumerator ShootingCooldown()  
     {
