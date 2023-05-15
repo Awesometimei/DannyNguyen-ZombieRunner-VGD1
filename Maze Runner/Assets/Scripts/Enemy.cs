@@ -26,11 +26,10 @@ public class Enemy : MonoBehaviour
         enemyRb.AddForce(lookDirection * speed);
     }
    
-    private void OnCollisionEnter(Collision other)
+   void OnTriggerEnter (Collision other)
     {
-        if (other.gameObject.CompareTag("Projectile")){
             Destroy(gameObject);
-        } 
+            Destroy(other.gameObject);
     }
 
     
