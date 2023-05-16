@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
         //Defines what the enemyRb is for later reference
         enemyRb = GetComponent<Rigidbody>();
         //References the player for later use
-        target = GameObject.Find("Base");
+        target = GameObject.Find("BasePoint");
     }
 
     // Update is called once per frame
@@ -26,10 +26,13 @@ public class Enemy : MonoBehaviour
         enemyRb.AddForce(lookDirection * speed);
     }
    
-   void OnTriggerEnter (Collision other)
+   void OnTriggerEnter (Collider other)
     {
+        if (other.gameObject.CompareTag("Projectile"))
+        {
             Destroy(gameObject);
             Destroy(other.gameObject);
+        }
     }
 
     

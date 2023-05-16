@@ -36,8 +36,4 @@ public class ProjectileFunction : MonoBehaviour
           transform.Translate(Vector3.forward * speed * Time.deltaTime); //Moves the projectile forward
     }
 
-    void OnTriggerEnter()
-    {
-        if 
-    }
 }
