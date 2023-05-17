@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     private float speed = 8.0f;
     private float horizontalInput;
     private float forwardInput;
+    private float firingCooldown = 0.1f;
 
     public GameObject projectilePrefab;
 
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ShootingCooldown()  
     {
-        yield return new WaitForSeconds(0.1f);                                                        //Sets a timer for the cooldown until player can shoot again
+        yield return new WaitForSeconds(firingCooldown);                                              //Sets a timer for the cooldown until player can shoot again
         CanShoot = true;                                                                              //Allows player to shoot again
     }
 }

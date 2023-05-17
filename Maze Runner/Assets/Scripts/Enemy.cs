@@ -25,17 +25,5 @@ public class Enemy : MonoBehaviour
         //Adds force on the player depending on player's and its own location times the speed
         enemyRb.AddForce(lookDirection * speed);
     }
-   
-   void OnTriggerEnter (Collider other)
-    {
-        if (other.gameObject.CompareTag("Projectile"))
-        {
-            Destroy(gameObject);
-            Destroy(other.gameObject);
-        }
-    }
-
-    
-
 }
 
