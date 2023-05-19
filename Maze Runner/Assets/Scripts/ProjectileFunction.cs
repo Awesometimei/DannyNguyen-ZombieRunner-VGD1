@@ -40,13 +40,6 @@ public class ProjectileFunction : MonoBehaviour
 
     void OnTriggerEnter (Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Destroy(gameObject);
-            Destroy(other.gameObject);
-            Debug.Log("Collided with enemy");
-        }
-
         if (other.gameObject.CompareTag("Building"))
         {
             Destroy(gameObject);

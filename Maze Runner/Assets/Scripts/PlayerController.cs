@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private float forwardInput;
     private float firingCooldown = 0.1f;
+    private float topBoundary = -104.0f;
+    private float bottomBoundary = -7.0f;
+    private float rightBoundary;
+    private float leftBoundary;
 
     public GameObject projectilePrefab;
 
@@ -31,6 +35,17 @@ public class PlayerController : MonoBehaviour
             Instantiate(projectilePrefab, transform.position, transform.rotation);                    //Creates a projectile at and facing the player
             CanShoot = false;                                                                         //Prevents player from spam firing projectiles
             StartCoroutine(ShootingCooldown());                                                       //Starts cooldown until player can shoot again
+        }
+
+
+         if (transform.position.x < topBoundary)
+        {
+            transform.position = new Vector3 (topBoundary, transform.position.y, transform.position.z);
+        }
+
+        if (transform.position.x > bottomBoundary)
+        {
+            transform.position = new Vector3 (bottomBoundary, transform.position.y, transform.position.z);
         }
         
     }

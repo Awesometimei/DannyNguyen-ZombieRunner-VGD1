@@ -7,6 +7,11 @@ public class Enemy : MonoBehaviour
     public float speed;
     private Rigidbody enemyRb;
     private GameObject target;
+    public int damage;
+    public int hp;
+    public GameObject hitParticle;
+    public GameObject bloodParticles;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +29,38 @@ public class Enemy : MonoBehaviour
 
         //Adds force on the player depending on player's and its own location times the speed
         enemyRb.AddForce(lookDirection * speed);
+
+        if (hp == 0)
+        {
+            Destroy(gameObject);
+            Debug.Log("Enemy destroyed");
+        }
+        
+
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Projectile"))
+        {
+            if (hp != 0)
+            {
+                InflictDamage(1);
+                HitEffects();
+            }
+        }
+    }
+
+    void InflictDamage(int damage)
+    {
+        hp -= damage;
+    }
+
+    void HitEffects()
+    {
+        Instantiate(hitParticle, transform.position, player.transform.rotation);
+        Instantiate(bloodParticles, transform.position, player.transform.rotation);
+    }
+
 }
 
