@@ -5,9 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - Ground
   - Projectile
   - Building
+  - FxTemporaire
+  - Obstacle
+  - Target
+  - InstaKill
+  - DoubleTap
+  - FasterFiring
   layers:
   - Default
   - TransparentFX

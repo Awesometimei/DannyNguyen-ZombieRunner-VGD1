@@ -114,7 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftBoundary: -14
   rightBoundary: 32
-  topBoundary: -106
+  topBoundary: -88
   bottomBoundary: -6
   speed: 100
 --- !u!135 &1928976976482445314

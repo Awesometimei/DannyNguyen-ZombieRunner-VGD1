@@ -7,12 +7,18 @@ public class PlayerLook : MonoBehaviour
     public float rotationSpeed = 1f;
     public float verticalMax = 60f;
     public float verticalMin = -45f;
-    public Transform target, player, obstruction;
-
     public float mouseX, mouseY;
+
+    public Transform target, player, obstruction;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+
+    void CursorMode()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -20,8 +26,12 @@ public class PlayerLook : MonoBehaviour
     
     void LateUpdate()
     {
-        AnchorCamera();
-        CamControl();
+        if(gameManager.isGameActive == true)
+        {
+            CursorMode();
+            AnchorCamera();
+            CamControl();
+        }
     }
 
     void AnchorCamera()

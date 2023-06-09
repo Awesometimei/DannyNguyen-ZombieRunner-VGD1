@@ -19,23 +19,27 @@ public class ProjectileFunction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x < topBoundary) {
+        if (transform.position.x < topBoundary)
+        {
             Destroy(gameObject);
         }
 
-        if (transform.position.x > bottomBoundary) {
+        if (transform.position.x > bottomBoundary)
+        {
             Destroy(gameObject);
         }
 
-        if (transform.position.z > rightBoundary) {
+        if (transform.position.z > rightBoundary)
+        {
             Destroy(gameObject);
         }
 
-        if (transform.position.z < leftBoundary) {
+        if (transform.position.z < leftBoundary)
+        {
             Destroy(gameObject);
         }
 
-          transform.Translate(Vector3.forward * speed * Time.deltaTime); //Moves the projectile forward
+        transform.Translate(Vector3.forward * speed * Time.deltaTime); //Moves the projectile forward
     }
 
     void OnTriggerEnter (Collider other)
@@ -43,7 +47,6 @@ public class ProjectileFunction : MonoBehaviour
         if (other.gameObject.CompareTag("Building"))
         {
             Destroy(gameObject);
-            Debug.Log("Collided with building");
         }
     }
 }

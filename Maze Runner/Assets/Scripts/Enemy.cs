@@ -5,62 +5,123 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed;
+    public float healthPoints;
+    public int scoreValue;
+    public int spawnCooldown;
+    public int enemyDamage;
+    public int weaponDamage;
     private Rigidbody enemyRb;
     private GameObject target;
-    public int damage;
-    public int hp;
     public GameObject hitParticle;
     public GameObject bloodParticles;
-    public GameObject player;
+    private GameManager gameManager;
+    public bool canMove = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Defines what the enemyRb is for later reference
+        
+    }
+
+    void Awake()
+    {
         enemyRb = GetComponent<Rigidbody>();
-        //References the player for later use
         target = GameObject.Find("BasePoint");
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        StartCoroutine(WaveCooldown());
     }
 
     // Update is called once per frame
     void Update()
-    {   //Defines what lookDirection is for later reference
-        Vector3 lookDirection = (target.transform.position - transform.position).normalized;
+    {   
+        if (canMove == true)
+        {
+            Vector3 lookDirection = (target.transform.position - transform.position).normalized;
+            enemyRb.AddForce(lookDirection * speed);
+        }
 
-        //Adds force on the player depending on player's and its own location times the speed
-        enemyRb.AddForce(lookDirection * speed);
-
-        if (hp == 0)
+        if (healthPoints == 0)
         {
             Destroy(gameObject);
             Debug.Log("Enemy destroyed");
+            gameManager.UpdateScore(scoreValue);
+            canMove = false;
         }
-        
 
+        if(gameManager.isGameActive == false)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Projectile"))
+        if (other.gameObject.CompareTag("Projectile") && healthPoints != 0)
         {
-            if (hp != 0)
+            if (GameObject.Find("Human").GetComponent<PlayerController>().hasInstaKill == true)
             {
-                InflictDamage(1);
+                Destroy(gameObject);
+                HitEffects();
+            }
+            else
+            {
+                InflictDamage(weaponDamage);
                 HitEffects();
             }
         }
     }
 
-    void InflictDamage(int damage)
+    void OnCollisionEnter(Collision collision)
     {
-        hp -= damage;
+        if(collision.gameObject.CompareTag("Obstacle") && healthPoints != 0)
+       {
+            InflictDamage(1);
+            HitEffects();
+       }       
+
+       if(collision.gameObject.CompareTag("Target"))
+       {
+            Destroy(gameObject);
+            gameManager.DamageTarget(enemyDamage);
+       }
+    }
+
+    void InflictDamage(int weaponDamage)
+    {   
+        healthPoints -= weaponDamage;
     }
 
     void HitEffects()
     {
-        Instantiate(hitParticle, transform.position, player.transform.rotation);
-        Instantiate(bloodParticles, transform.position, player.transform.rotation);
+        Instantiate(hitParticle, transform.position, transform.rotation);
+        Instantiate(bloodParticles, transform.position, transform.rotation);
     }
 
+    IEnumerator WaveCooldown()
+    {
+        yield return new WaitForSeconds(spawnCooldown);
+        canMove = true;
+    }
+
+    public void SetEasyMode()
+    {
+        speed = 3.0f;
+        enemyDamage = 3;
+        spawnCooldown = 10;
+    }
+
+    public void SetMediumMode()
+    {
+        speed = 5.0f;
+        enemyDamage = 5;
+        spawnCooldown = 7;
+    }
+
+    public void SetHardMode()
+    {
+        speed = 7.5f;
+        enemyDamage = 150;
+        spawnCooldown = 5;
+    }
 }
 
